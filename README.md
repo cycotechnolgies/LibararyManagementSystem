@@ -37,7 +37,7 @@ Welcome to the Library Management System (LMS)! This comprehensive software solu
 ### Steps
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/library-management-system.git
+   [git clone https://github.com/yourusername/library-management-system.git](https://github.com/cycotechnolgies/LibararyManagementSystem.git)
    ```
 2. **Navigate to the Project Directory**:
    ```bash
