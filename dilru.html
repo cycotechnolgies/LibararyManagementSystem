@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Borrow Details</title>
+</head>
+<body>
+    <h1>Add Borrow Details</h1>
+    <form id="borrowForm">
+        <label for="borrowID">Borrow ID:</label>
+        <input type="text" id="borrowID" name="borrowID" required><br><br>
+        
+        <label for="bookID">Book ID:</label>
+        <input type="text" id="bookID" name="bookID" required><br><br>
+        
+        <label for="memberID">Member ID:</label>
+        <input type="text" id="memberID" name="memberID" required><br><br>
+        
+        <label for="borrowStatus">Borrow Status:</label>
+        <select id="borrowStatus" name="borrowStatus">
+            <option value="available">Available</option>
+            <option value="borrowed">Borrowed</option>
+        </select><br><br>
+        
+        <button type="submit">Add Borrow Detail</button>
+    </form>
+
+    <h2>Borrow Records</h2>
+    <table id="borrowTable" border="1">
+        <thead>
+            <tr>
+                <th>BookID</th>
+                <th>Member</th>
+                <th>Book Name</th>
+                <th>Borrow Status</th>
+                <th>Date Modified</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Borrow records will be inserted here dynamically -->
+        </tbody>
+    </table>
+
+    <script src="library.js"></script>
+</body>
+</html>
