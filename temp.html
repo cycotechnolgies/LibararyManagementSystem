@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="dilru.css">
+</head>
+<body>
+    <h1>Library Management System</h1>
+
+    <div class="form-container">
+        <h2>Add Borrow Details</h2>
+        <form id="borrowForm" action="library_management.php" method="POST">
+            <input type="hidden" name="action" value="add">
+            <label for="borrowId">Borrow ID:</label>
+            <input type="text" id="borrowId" name="borrowId" required>
+            <label for="bookId">Book ID:</label>
+            <input type="text" id="bookId" name="bookId" required>
+            <label for="memberId">Member ID:</label>
+            <input type="text" id="memberId" name="memberId" required>
+            <label for="borrowStatus">Borrow Status:</label>
+            <select id="borrowStatus" name="borrowStatus" required>
+                <option value="borrowed">Borrowed</option>
+                <option value="available">Available</option>
+            </select>
+            <button type="submit">Add Borrow Detail</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>Update Borrow Details</h2>
+        <form id="updateForm" action="library_management.php" method="POST">
+            <input type="hidden" name="action" value="update">
+            <label for="updateBorrowId">Borrow ID:</label>
+            <input type="text" id="updateBorrowId" name="updateBorrowId" required>
+            <label for="updateBookId">Book ID:</label>
+            <input type="text" id="updateBookId" name="updateBookId">
+            <label for="updateMemberId">Member ID:</label>
+            <input type="text" id="updateMemberId" name="updateMemberId">
+            <label for="updateBorrowStatus">Borrow Status:</label>
+            <select id="updateBorrowStatus" name="updateBorrowStatus">
+                <option value="borrowed">Borrowed</option>
+                <option value="available">Available</option>
+            </select>
+            <button type="submit">Update Borrow Detail</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>Delete Borrow Details</h2>
+        <form id="deleteForm" action="library_management.php" method="POST">
+            <input type="hidden" name="action" value="delete">
+            <label for="deleteBorrowId">Borrow ID:</label>
+            <input type="text" id="deleteBorrowId" name="deleteBorrowId" required>
+            <label for="deleteBookId">Book ID:</label>
+            <input type="text" id="deleteBookId" name="deleteBookId">
+            <label for="deleteMemberId">Member ID:</label>
+            <input type="text" id="deleteMemberId" name="deleteMemberId">
+            <label for="deleteBorrowStatus">Borrow Status:</label>
+            <select id="deleteBorrowStatus" name="deleteBorrowStatus">
+                <option value="borrowed">Borrowed</option>
+                <option value="available">Available</option>
+            </select>
+            <button type="submit">Delete Borrow Detail</button>
+        </form>
+    </div>
+
+    <div class="form-container">
+        <h2>Borrow Details</h2>
+        <table id="borrowTable">
+            <thead>
+                <tr>
+                    <th>Book ID</th>
+                    <th>Member who borrowed</th>
+                    <th>Book Name</th>
+                    <th>Borrow Status</th>
+                    <th>Date Modified</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php include 'fetch_borrow.php'; ?>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="scripts.js"></script>
+</body>
+</html>
