@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+    <link rel="stylesheet" href="dilru.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <h1>Library Management System</h1>
+
+    <div id="formPage" class="form-container">
+        <h2>Add Borrow Details</h2>
+        <form id="borrowForm">
+            <label for="borrowId">Borrow ID:</label>
+            <input type="text" id="borrowId" name="borrowId" required>
+            <label for="bookId">Book ID:</label>
+            <input type="text" id="bookId" name="bookId" required>
+            <label for="memberId">Member ID:</label>
+            <input type="text" id="memberId" name="memberId" required>
+            <label for="borrowStatus">Borrow Status:</label>
+            <select id="borrowStatus" name="borrowStatus" required>
+                <option value="borrowed">Borrowed</option>
+                <option value="available">Available</option>
+            </select>
+            <button type="button" onclick="addBorrowDetail()">Add Borrow Detail</button>
+        </form>
+    </div>
+
+    <div id="detailsPage" class="form-container" style="display: none;">
+        <h2>Borrow Details</h2>
+        <table id="borrowTable">
+            <thead>
+                <tr>
+                    <th>Borrow ID</th>
+                    <th>Book ID</th>
+                    <th>Member ID</th>
+                    <th>Borrow Status</th>
+                    <th>Date Modified</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="borrowTableBody">
+            </tbody>
+        </table>
+        <button type="button" onclick="showFormPage()">Add More</button>
+    </div>
+
+    <script>
+        function addBorrowDetail() {
+            // Get form values
+            const borrowId = document.getElementById('borrowId').value;
+            const bookId = document.getElementById('bookId').value;
+            const memberId = document.getElementById('memberId').value;
+            const borrowStatus = document.getElementById('borrowStatus').value;
+
+            // Create new row
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${borrowId}</td>
+                <td>${bookId}</td>
+                <td>${memberId}</td>
+                <td>${borrowStatus}</td>
+                <td>${new Date().toLocaleString()}</td>
+                <td>
+                    <button type="button" onclick="editRow(this)" title="Edit">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" onclick="deleteRow(this)" title="Delete">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            `;
+
+            // Append new row to table body
+            document.getElementById('borrowTableBody').appendChild(newRow);
+
+            // Show details page and hide form page
+            document.getElementById('formPage').style.display = 'none';
+            document.getElementById('detailsPage').style.display = 'block';
+        }
+
+        function deleteRow(button) {
+            // Delete the row
+            const row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+
+        function editRow(button) {
+            // Get the row to edit
+            const row = button.parentNode.parentNode;
+            const borrowId = row.children[0].textContent;
+            const bookId = row.children[1].textContent;
+            const memberId = row.children[2].textContent;
+            const borrowStatus = row.children[3].textContent;
+
+            // Set form values
+            document.getElementById('borrowId').value = borrowId;
+            document.getElementById('bookId').value = bookId;
+            document.getElementById('memberId').value = memberId;
+            document.getElementById('borrowStatus').value = borrowStatus;
+
+            // Delete the row
+            row.parentNode.removeChild(row);
+
+            // Show form page and hide details page
+            document.getElementById('formPage').style.display = 'block';
+            document.getElementById('detailsPage').style.display = 'none';
+        }
+
+        function showFormPage() {
+            // Show form page and hide details page
+            document.getElementById('formPage').style.display = 'block';
+            document.getElementById('detailsPage').style.display = 'none';
+
+            // Clear form fields
+            document.getElementById('borrowForm').reset();
+        }
+    </script>
+</body>
+</html>
