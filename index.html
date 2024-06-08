@@ -1,83 +1,97 @@
 <!DOCTYPE html>
-<html lang="en">
+<html data-bs-theme="light" lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="/src/css/bootstrap.min.css" />
-
-    <!--for social media logo -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-
-    <!--connect css -->
-    <link rel="stylesheet" href="style.css">
-    <script src="/src/js/bootstrap.min.js"></script>
-    <title>Library Management System</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
+    />
+    <title>Login - Brand</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap"
+    />
   </head>
-  <body>
-
-
-
-
-    <!--login -->
-    <div class="container" id="container">
-      <div class="form-container sign-up">
-          <form>
-              <h1>Create Account</h1>
-              
-			  <input type="text" placeholder="User ID">
-              <input type="text" placeholder="First Name">
-              <input type="text" placeholder="Last Name">
-              <input type="email" placeholder="Email">
-              <input type="password" placeholder="Password">
-              
-              <div class="social-icons">
-                <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-            </div>
-              <button>Sign Up</button>
-          </form>
-      </div>
-      <div class="form-container log-in">
-          <form>
-              <h1>Log In</h1>
-              
-              <br>
-              <input type="email" placeholder="Email">
-              <input type="password" placeholder="Password">
-              
-              <span>or</span>
-              <div class="social-icons">
-                <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-            </div>
-              <a href="#">Forget Password?</a>
-              <button>Log In</button>
-          </form>
-      </div>
-      <div class="toggle-container">
-          <div class="toggle">
-              <div class="toggle-panel toggle-left">
-                  <h1>Welcome Back!</h1>
-                  <p>Enter your personal details</p>
-                  <button class="hidden" id="login">Log In</button>
+  <body class="bg-gradient-primary" style="background: #f74902">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-9 col-lg-12 col-xl-10">
+          <div class="card shadow-lg o-hidden border-0 my-5">
+            <div class="card-body p-0">
+              <div class="row">
+                <div class="col-lg-6 d-none d-lg-flex">
+                  <div
+                    class="flex-grow-1 bg-login-image"
+                    style="background: url('assets/img/lib.jpg') center / cover"
+                  ></div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="p-5">
+                    <div class="text-center">
+                      <h4 class="text-dark mb-4">Welcome Back!</h4>
+                    </div>
+                    <form class="user">
+                      <div class="mb-3">
+                        <input
+                          class="form-control form-control-user"
+                          type="email"
+                          id="exampleInputEmail"
+                          aria-describedby="emailHelp"
+                          placeholder="Enter Email Address..."
+                          name="email"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <input
+                          class="form-control form-control-user"
+                          type="password"
+                          id="exampleInputPassword"
+                          placeholder="Password"
+                          name="password"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <div class="custom-checkbox small">
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="checkbox"
+                              id="formCheck-1"
+                            /><label class="form-check-label" for="formCheck-1"
+                              >Remember Me</label
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        class="btn btn-primary d-block btn-user w-100"
+                        type="submit"
+                        style="
+                          background: #f74902;
+                          font-weight: bold;
+                          font-size: 15.8px;
+                        "
+                      >
+                        Login
+                      </button>
+                      <hr />
+                    </form>
+                    <div class="text-center"></div>
+                    <div class="text-center">
+                      <a class="small" href="register.html"
+                        >Create an Account!</a
+                      >
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="toggle-panel toggle-right">
-                  <h1>Hello!</h1>
-                  <p>Register with your personal details</p>
-                  <button class="hidden" id="register">Sign Up</button>
-              </div>
+            </div>
           </div>
+        </div>
       </div>
-  </div>
-
-  <script src="script.js"></script>
-
-
-
-
-
-
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/theme.js"></script>
   </body>
 </html>
