@@ -1,18 +1,16 @@
 body {
     font-family: Arial, sans-serif;
     margin: 20px;
-   /* background-image: url(queen-7234169_1920.jpg); */
     background-color: #fcfcfc;
 }
 
-h1{
+h1 {
     color: #000000;
 }
 
 h2 {
     color: #000000;
 }
-
 
 .form-container {
     background-color: #fff;
