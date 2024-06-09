@@ -1,4 +1,28 @@
+<?php
 
+session_start();
+
+require '../assets/conn.php';
+
+$sql = "
+        SELECT 
+            (SELECT COUNT(*) FROM member) AS total_members,
+            (SELECT COUNT(*) FROM book) AS total_books,
+            (SELECT COUNT(*) FROM bookborrower WHERE borrow_status = 'borrowed') AS total_borrowed_books,
+            (SELECT SUM(fine_amount) FROM fine WHERE fine_amount IS NOT NULL) AS total_fine_paid;
+    ";
+    
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $users = $result['total_members'];
+    $borrow = $result['total_borrowed_books'];
+    $fine = $result['total_fine_paid'];
+    $books = $result['total_books'];
+
+?>
 
 
 <!DOCTYPE html>
@@ -37,19 +61,7 @@
           >
           <hr class="sidebar-divider my-0" />
           <ul class="navbar-nav text-light" id="accordionSidebar">
-            <li class="nav-item">
-              <a class="nav-link active" href="Dashboard.php"
-                ><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a
-              ><a class="nav-link active" href="/index.html"
-                ><i class="far fa-folder-open"></i><span>Books</span></a
-              ><a class="nav-link active" href="/index.html"
-                ><i class="far fa-list-alt"></i><span>Category</span></a
-              ><a class="nav-link active" href="/index.html"
-                ><i class="far fa-user"></i><span>Members</span></a
-              ><a class="nav-link active" href="/index.html"
-                ><i class="fas fa-user-cog"></i><span>Staff</span></a
-              >
-            </li>
+            <?php include 'sidebar_item.php'?>
           </ul>
           <div class="text-center d-none d-md-inline"></div>
         </div>
@@ -66,20 +78,10 @@
                 <i class="fas fa-bars" style="color: #f96302"></i>
               </button>
               <ul class="navbar-nav flex-nowrap ms-auto">
-                <li class="nav-item dropdown d-sm-none no-arrow">
-                  <a
-                    class="dropdown-toggle nav-link"
-                    aria-expanded="false"
-                    data-bs-toggle="dropdown"
-                    href="#"
-                    ><i class="fas fa-search"></i
-                  ></a>
-                  
-                </li>
                 <li class="nav-item dropdown no-arrow mx-1"></li>
                 <div class="d-none d-sm-block topbar-divider"></div>
                 <li class="nav-item dropdown no-arrow">
-                <button type="button" class="btn btn-dark"><i class="fas fa-sign-out-alt"></i></button>
+                <button type="button" class="btn btn-dark sm:mt-2"><i class="fas fa-sign-out-alt"></i></button>
                 </li>
               </ul>
             </div>
@@ -102,7 +104,7 @@
                           <span>Books</span>
                         </div>
                         <div class="text-dark fw-bold h5 mb-0">
-                          <span>200</span>
+                          <span><?php echo $books; ?></span>
                         </div>
                       </div>
                       <div class="col-auto">
@@ -120,19 +122,19 @@
                         <div
                           class="text-uppercase text-info fw-bold text-xs mb-1"
                         >
-                          <span>Users</span>
+                          <span>Members</span>
                         </div>
                         <div class="row g-0 align-items-center">
                           <div class="col-auto">
                             <div class="text-dark fw-bold h5 mb-0 me-3">
-                              <span>50</span>
+                              <span><?php echo $users; ?></span>
                             </div>
                           </div>
                         </div>
                       </div>
                       <div class="col-auto">
                         <i
-                          class="fas fa-clipboard-list fa-2x text-gray-300"
+                          class="fas fa-user fa-2x text-gray-300"
                         ></i>
                       </div>
                     </div>
@@ -150,7 +152,7 @@
                           <span>Borrowed</span>
                         </div>
                         <div class="text-dark fw-bold h5 mb-0">
-                          <span>25</span>
+                          <span><?php echo $borrow; ?></span>
                         </div>
                       </div>
                       <div class="col-auto">
@@ -171,7 +173,7 @@
                           <span>Fine Earned</span>
                         </div>
                         <div class="text-dark fw-bold h5 mb-0">
-                          <span>$215,000</span>
+                          <span>$<?php echo $fine; ?></span>
                         </div>
                       </div>
                       <div class="col-auto">
