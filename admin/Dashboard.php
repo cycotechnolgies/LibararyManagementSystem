@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
   <head>
@@ -35,14 +38,16 @@
           <hr class="sidebar-divider my-0" />
           <ul class="navbar-nav text-light" id="accordionSidebar">
             <li class="nav-item">
-              <a class="nav-link active" href="/index.html"
+              <a class="nav-link active" href="Dashboard.php"
                 ><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a
               ><a class="nav-link active" href="/index.html"
                 ><i class="far fa-folder-open"></i><span>Books</span></a
               ><a class="nav-link active" href="/index.html"
-                ><i class="far fa-list-alt"></i><span>Cateogary</span></a
+                ><i class="far fa-list-alt"></i><span>Category</span></a
               ><a class="nav-link active" href="/index.html"
                 ><i class="far fa-user"></i><span>Members</span></a
+              ><a class="nav-link active" href="/index.html"
+                ><i class="fas fa-user-cog"></i><span>Staff</span></a
               >
             </li>
           </ul>
@@ -69,57 +74,12 @@
                     href="#"
                     ><i class="fas fa-search"></i
                   ></a>
-                  <div
-                    class="dropdown-menu dropdown-menu-end p-3 animated--grow-in"
-                    aria-labelledby="searchDropdown"
-                  >
-                    <form class="me-auto navbar-search w-100">
-                      <div class="input-group">
-                        <input
-                          class="bg-light border-0 form-control small"
-                          type="text"
-                          placeholder="Search for ..."
-                        /><button class="btn btn-primary" type="button">
-                          <i class="fas fa-search"></i>
-                        </button>
-                      </div>
-                    </form>
-                  </div>
+                  
                 </li>
                 <li class="nav-item dropdown no-arrow mx-1"></li>
                 <div class="d-none d-sm-block topbar-divider"></div>
                 <li class="nav-item dropdown no-arrow">
-                  <div class="nav-item dropdown show no-arrow">
-                    <a
-                      class="dropdown-toggle nav-link"
-                      aria-expanded="true"
-                      data-bs-toggle="dropdown"
-                      href="#"
-                      ><span class="d-none d-lg-inline me-2 text-gray-600 small"
-                        >Valerie Luna</span
-                      ><img
-                        class="border rounded-circle img-profile"
-                        src="/assets/img/avatars/avatar1.jpeg"
-                    /></a>
-                    <div
-                      class="dropdown-menu shadow dropdown-menu-end animated--grow-in"
-                      data-bs-popper="none"
-                    >
-                      <a class="dropdown-item" href="#"
-                        ><i
-                          class="fas fa-user fa-sm fa-fw me-2 text-gray-400"
-                        ></i
-                        >&nbsp;Profile</a
-                      >
-                      <div class="dropdown-divider"></div>
-                      <a class="dropdown-item" href="#"
-                        ><i
-                          class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"
-                        ></i
-                        >&nbsp;Logout</a
-                      >
-                    </div>
-                  </div>
+                <button type="button" class="btn btn-dark"><i class="fas fa-sign-out-alt"></i></button>
                 </li>
               </ul>
             </div>
@@ -194,7 +154,7 @@
                         </div>
                       </div>
                       <div class="col-auto">
-                        <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        <i class="fas fa-bookmark fa-2x text-gray-300"></i>
                       </div>
                     </div>
                   </div>
