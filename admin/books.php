@@ -70,7 +70,7 @@
             </div>
             <div>
               <?php
-                include 'books_opt.php';
+                include 'books_reg_front.php';
               ?>
             </div>
           </div>
