@@ -4,12 +4,19 @@ session_start();
 
 // Initialize variables
 $update = false;
-$book_id = $book_name = $category_id = "";
+$book_id = "";
+$book_name = "";
+$category_id = "";
 
 // Function to check if Book ID already exists
-function checkBookExistence($conn, $book_id) {
-    $stmt = $conn->prepare("SELECT * FROM book WHERE book_id = ?");
-    $stmt->bind_param("s", $book_id);
+function checkBookExistence($conn, $book_id, $exclude_id = null) {
+    if ($exclude_id === null) {
+        $stmt = $conn->prepare("SELECT 1 FROM book WHERE book_id = ?");
+        $stmt->bind_param("s", $book_id);
+    } else {
+        $stmt = $conn->prepare("SELECT 1 FROM book WHERE book_id = ? AND book_id != ?");
+        $stmt->bind_param("ss", $book_id, $exclude_id);
+    }
     $stmt->execute();
     $result = $stmt->get_result();
     $exists = $result->num_rows > 0;
@@ -22,10 +29,7 @@ function fetchCategories($conn) {
     $stmt = $conn->prepare("SELECT category_id, category_name FROM bookcategory");
     $stmt->execute();
     $result = $stmt->get_result();
-    $categories = [];
-    while ($row = $result->fetch_assoc()) {
-        $categories[] = $row;
-    }
+    $categories = $result->fetch_all(MYSQLI_ASSOC);
     $stmt->close();
     return $categories;
 }
@@ -34,27 +38,81 @@ function fetchCategories($conn) {
 $categories = fetchCategories($conn);
 
 // Saving new book details
-if (isset($_POST['save'])) {
-    $book_id = $_POST['book_id'];
-    $book_name = $_POST['book_name'];
-    $category_id = $_POST['category_id'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['save'])) {
+        $book_id = $_POST['book_id'];
+        $book_name = $_POST['book_name'];
+        $category_id = $_POST['category_id'];
 
-    if (checkBookExistence($conn, $book_id)) {
-        $_SESSION['message'] = "Book ID already exists!";
-        $_SESSION['msg_type'] = "danger";
-    } else {
-        $stmt = $conn->prepare("INSERT INTO book (book_id, book_name, category_id) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $book_id, $book_name, $category_id);
-        $stmt->execute();
-        $stmt->close();
-
-        $_SESSION['message'] = "Book record has been saved!";
-        $_SESSION['msg_type'] = "success";
+        if (checkBookExistence($conn, $book_id)) {
+            $_SESSION['message'] = "Book ID already exists!";
+            $_SESSION['msg_type'] = "danger";
+        } else {
+            $stmt = $conn->prepare("INSERT INTO book (book_id, book_name, category_id) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $book_id, $book_name, $category_id);
+            if ($stmt->execute()) {
+                $_SESSION['message'] = "Book record has been saved!";
+                $_SESSION['msg_type'] = "success";
+            } else {
+                $_SESSION['message'] = "Error saving book record: " . $conn->error;
+                $_SESSION['msg_type'] = "danger";
+            }
+            $stmt->close();
+        }
+        header("Location: books.php");
+        exit();
     }
-    header("Location: books.php");
-    exit();
+
+    // Updating a book
+    if (isset($_POST['update'])) {
+        $book_id = $_POST['book_id'];
+        $book_name = $_POST['book_name'];
+        $category_id = $_POST['category_id'];
+
+        if (checkBookExistence($conn, $book_id, $book_id)) {
+            $_SESSION['message'] = "Book ID already exists!";
+            $_SESSION['msg_type'] = "danger";
+        } else {
+            $stmt = $conn->prepare("UPDATE book SET book_name = ?, category_id = ? WHERE book_id = ?");
+            $stmt->bind_param("sss", $book_name, $category_id, $book_id);
+            if ($stmt->execute()) {
+                $_SESSION['message'] = "Book record has been updated!";
+                $_SESSION['msg_type'] = "warning";
+            } else {
+                $_SESSION['message'] = "Error updating book record: " . $conn->error;
+                $_SESSION['msg_type'] = "danger";
+            }
+            $stmt->close();
+        }
+        header("Location: books.php");
+        exit();
+    }
 }
 
+
+
+// Editing a book
+if (isset($_GET['edit'])) {
+    $book_id = $_GET['edit'];
+    $update = true;
+
+    $stmt = $conn->prepare("SELECT book_id, book_name, category_id FROM book WHERE book_id = ?");
+    $stmt->bind_param("s", $book_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 1) {
+        $row = $result->fetch_assoc();
+        $book_id = $row['book_id'];
+        $book_name = $row['book_name'];
+        $category_id = $row['category_id'];
+    } else {
+        $_SESSION['message'] = "Book not found!";
+        $_SESSION['msg_type'] = "danger";
+    }
+
+    $stmt->close();
+}
 // Deleting a book
 if (isset($_GET['delete'])) {
     $book_id = $_GET['delete'];
@@ -65,58 +123,14 @@ if (isset($_GET['delete'])) {
     } else {
         $stmt = $conn->prepare("DELETE FROM book WHERE book_id = ?");
         $stmt->bind_param("s", $book_id);
-        $stmt->execute();
+        if ($stmt->execute()) {
+            $_SESSION['message'] = "Book record has been deleted!";
+            $_SESSION['msg_type'] = "danger";
+        } else {
+            $_SESSION['message'] = "Error deleting book record: " . $conn->error;
+            $_SESSION['msg_type'] = "danger";
+        }
         $stmt->close();
-
-        $_SESSION['message'] = "Book record has been deleted!";
-        $_SESSION['msg_type'] = "danger";
-    }
-    header("Location: books.php");
-    exit();
-}
-
-// Editing a book
-if (isset($_GET['edit'])) {
-    $book_id = $_GET['edit'];
-    $update = true;
-
-    $stmt = $conn->prepare("SELECT * FROM book WHERE book_id = ?");
-    $stmt->bind_param("s", $book_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        $book_id = $row['book_id'];
-        $book_name = $row['book_name'];
-        $category_id = $row['category_id'];
-    }
-
-    $stmt->close();
-}
-
-// Updating a book
-if (isset($_POST['update'])) {
-    $book_id = $_POST['book_id'];
-    $book_name = $_POST['book_name'];
-    $category_id = $_POST['category_id'];
-
-    // Check for existence but allow current book_id to pass
-    $stmt = $conn->prepare("SELECT * FROM book WHERE book_id = ? AND book_id != ?");
-    $stmt->bind_param("ss", $book_id, $book_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        $_SESSION['message'] = "Book ID already exists!";
-        $_SESSION['msg_type'] = "danger";
-    } else {
-        $stmt = $conn->prepare("UPDATE book SET book_name = ?, category_id = ? WHERE book_id = ?");
-        $stmt->bind_param("sss", $book_name, $category_id, $book_id);
-        $stmt->execute();
-        $stmt->close();
-
-        $_SESSION['message'] = "Book record has been updated!";
-        $_SESSION['msg_type'] = "warning";
     }
     header("Location: books.php");
     exit();
