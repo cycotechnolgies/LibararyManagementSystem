@@ -19,7 +19,12 @@ if (isset($_POST['login'])) {
         $user = $stmt->fetch();
 
         if ($user) {
+<<<<<<< Updated upstream
             if ($pwd == $user['password']) {
+=======
+            $hash = $user['password'];
+            if (password_verify($pwd, $hash)) {
+>>>>>>> Stashed changes
                 $_SESSION['user_id'] = $user['user_id']; 
                 $_SESSION['user_email'] = $user['email'];
                 header('Location: admin/Dashboard.php');
