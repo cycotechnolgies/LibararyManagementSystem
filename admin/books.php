@@ -57,7 +57,9 @@
                 <li class="nav-item dropdown no-arrow mx-1"></li>
                 <div class="d-none d-sm-block topbar-divider"></div>
                 <li class="nav-item dropdown no-arrow">
-                <button type="button" class="btn btn-dark sm:mt-2"><i class="fas fa-sign-out-alt"></i></button>
+                <form action="../logout.php" method="POST">
+                  <button type="submit" class="btn btn-dark sm:mt-2"><i class="fas fa-sign-out-alt"></i></button>
+                </form>
                 </li>
               </ul>
             </div>
@@ -70,7 +72,7 @@
             </div>
             <div>
               <?php
-                include 'books_reg_front.php';
+                include 'books_opt.php';
               ?>
             </div>
           </div>
