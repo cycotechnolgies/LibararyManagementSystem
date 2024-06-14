@@ -7,7 +7,7 @@ echo '
                 ><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a
               ><a class="nav-link active" href="books.php"
                 ><i class="far fa-folder-open"></i><span>Books</span></a
-              ><a class="nav-link active" href=""
+              ><a class="nav-link active" href="category.php"
                 ><i class="far fa-list-alt"></i><span>Category</span></a
               ><a class="nav-link active" href="borrow.php"
                 ><i class="fas fa-tags"></i><span>Borrows</span></a

@@ -9,7 +9,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
-    <title>Dashboard - MyLib</title>
+    <title>Books - MyLib</title>
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
@@ -37,7 +37,7 @@
           >
           <hr class="sidebar-divider my-0" />
           <ul class="navbar-nav text-light" id="accordionSidebar">
-              <?php include 'sidebar_item.php'?>
+          <?php include 'sidebar_item.php'?>
           </ul>
           <div class="text-center d-none d-md-inline"></div>
         </div>
@@ -57,9 +57,7 @@
                 <li class="nav-item dropdown no-arrow mx-1"></li>
                 <div class="d-none d-sm-block topbar-divider"></div>
                 <li class="nav-item dropdown no-arrow">
-                <form action="../logout.php" method="POST">
-                  <button type="submit" class="btn btn-dark sm:mt-2"><i class="fas fa-sign-out-alt"></i></button>
-                </form>
+                <button type="button" class="btn btn-dark sm:mt-2"><i class="fas fa-sign-out-alt"></i></button>
                 </li>
               </ul>
             </div>
@@ -68,11 +66,11 @@
             <div
               class="d-sm-flex justify-content-between align-items-center mb-4"
             >
-              <h3 class="text-dark mb-0">Members</h3>
+              <h3 class="text-dark mb-0">Category</h3>
             </div>
             <div>
               <?php
-                include 'members_opt.php';
+                include 'catoegory_opt.php';
               ?>
             </div>
           </div>
