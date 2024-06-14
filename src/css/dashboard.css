@@ -1,0 +1,14 @@
+:root {
+  --offcanvas-width: 270px;
+}
+
+.sidenav-nav {
+  width: var(--offcanvas-width);
+}
+
+@media (min-width: 992px) {
+  .sidenav-nav {
+    transform: none;
+    visibility: visible !important;
+  }
+}
