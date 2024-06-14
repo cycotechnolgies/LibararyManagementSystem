@@ -46,12 +46,12 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 
 ## Acknowledgments
 Thank you to all team members for their contributions and collaboration.
-Minidu Oshan - 2022t01584
-Shammi Nethupul - 2022t01523
-Eranda Nimasara - 2022t01570
-Dilru Rathnasooriya - 2022t01
-Matheesha V. - 2022t0124
-Lakshitha Ekanayake - 2022t01527
+- **Minidu Oshan** - 2022t01584
+- **Shammi Nethupul** - 2022t01523
+- **Eranda Nimasara** - 2022t01570
+- **Dilru Rathnasooriya** - 2022t01
+- **Matheesha V.** - 2022t0124
+- **Lakshitha Ekanayake** - 2022t01527
 
 ---
 
