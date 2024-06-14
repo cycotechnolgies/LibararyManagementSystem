@@ -12,7 +12,7 @@ function getLastBorrowId($conn) {
     if ($result && $lastBorrow = $result->fetch_assoc()) {
         return $lastBorrow['borrow_id'];
     } else {
-        return 'BR001';
+       $lastBorrow = 'BR000';
     }
 }
 
