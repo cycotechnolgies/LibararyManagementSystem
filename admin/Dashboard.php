@@ -2,26 +2,33 @@
 
 session_start();
 
-require '../assets/conn.php';
+require 'conn.php';
 
 $sql = "
-        SELECT 
-            (SELECT COUNT(*) FROM member) AS total_members,
-            (SELECT COUNT(*) FROM book) AS total_books,
-            (SELECT COUNT(*) FROM bookborrower WHERE borrow_status = 'borrowed') AS total_borrowed_books,
-            (SELECT SUM(fine_amount) FROM fine WHERE fine_amount IS NOT NULL) AS total_fine_paid;
-    ";
-    
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    SELECT 
+        (SELECT COUNT(*) FROM member) AS total_members,
+        (SELECT COUNT(*) FROM book) AS total_books,
+        (SELECT COUNT(*) FROM bookborrower WHERE borrow_status = 'borrowed') AS total_borrowed_books,
+        (SELECT COUNT(*) FROM bookcategory) AS total_categories
+";
 
-    $users = $result['total_members'];
-    $borrow = $result['total_borrowed_books'];
-    $fine = $result['total_fine_paid'];
-    $books = $result['total_books'];
+// Execute the query using MySQLi
+if ($result = $conn->query($sql)) {
+    // Fetch the associative array
+    $data = $result->fetch_assoc();
 
+    // Assign the results to variables
+    $total_members = $data['total_members'];
+    $total_books = $data['total_books'];
+    $total_borrowed_books = $data['total_borrowed_books'];
+    $total_categories = $data['total_categories'];
+
+    // Free result set
+    $result->free();
+} else {
+    // Handle error
+    echo "Error: " . $conn->error;
+}
 ?>
 
 
@@ -34,7 +41,7 @@ $sql = "
       content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     />
     <title>Dashboard - MyLib</title>
-    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css" />
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i&amp;display=swap"
@@ -81,7 +88,9 @@ $sql = "
                 <li class="nav-item dropdown no-arrow mx-1"></li>
                 <div class="d-none d-sm-block topbar-divider"></div>
                 <li class="nav-item dropdown no-arrow">
-                <button type="button" class="btn btn-dark sm:mt-2"><i class="fas fa-sign-out-alt"></i></button>
+                <form action="../logout.php" method="POST">
+                  <button type="submit" class="btn btn-dark sm:mt-2"><i class="fas fa-sign-out-alt"></i></button>
+                </form>
                 </li>
               </ul>
             </div>
@@ -104,7 +113,7 @@ $sql = "
                           <span>Books</span>
                         </div>
                         <div class="text-dark fw-bold h5 mb-0">
-                          <span><?php echo $books; ?></span>
+                          <span><?php echo $total_books; ?></span>
                         </div>
                       </div>
                       <div class="col-auto">
@@ -127,7 +136,7 @@ $sql = "
                         <div class="row g-0 align-items-center">
                           <div class="col-auto">
                             <div class="text-dark fw-bold h5 mb-0 me-3">
-                              <span><?php echo $users; ?></span>
+                              <span><?php echo $total_members; ?></span>
                             </div>
                           </div>
                         </div>
@@ -152,7 +161,7 @@ $sql = "
                           <span>Borrowed</span>
                         </div>
                         <div class="text-dark fw-bold h5 mb-0">
-                          <span><?php echo $borrow; ?></span>
+                          <span><?php echo $total_borrowed_books; ?></span>
                         </div>
                       </div>
                       <div class="col-auto">
@@ -170,14 +179,14 @@ $sql = "
                         <div
                           class="text-uppercase text-success fw-bold text-xs mb-1"
                         >
-                          <span>Fine Earned</span>
+                          <span>Categories</span>
                         </div>
                         <div class="text-dark fw-bold h5 mb-0">
-                          <span>$<?php echo $fine; ?></span>
+                          <span><?php echo $total_categories; ?></span>
                         </div>
                       </div>
                       <div class="col-auto">
-                        <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        <i class="fas fa-clipboard fa-2x text-gray-300"></i>
                       </div>
                     </div>
                   </div>
